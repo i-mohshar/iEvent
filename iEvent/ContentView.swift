@@ -6,16 +6,46 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    
+    @Environment(\.modelContext) var eContext
+    
+    @State private var path = [Event]()
+    @State private var sortOrder = SortDescriptor(\Event.eName)
+    @State private var searchText : String = ""
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack(path : $path)
+        {
+            EventListView(sort: sortOrder, searchString: searchText)
+            .navigationTitle("iEvent")
+            .searchable(text: $searchText)
+            .navigationDestination(for: Event.self, destination: EventDetailView.init)
+            .toolbar
+            {
+                Button("Add Event", systemImage: "plus", action: addEvent)
+                Menu("Sort", systemImage:"arrow.up.arrow.down")
+                {
+                    Picker("Sort", selection: $sortOrder)
+                    {
+                        Text("Name").tag(SortDescriptor(\Event.eName))
+                        Text("Date").tag(SortDescriptor(\Event.eDate))
+                        Text("Priority").tag(SortDescriptor(\Event.ePriority))
+                    }
+                    .pickerStyle(.inline)
+                }
+            }
         }
-        .padding()
+    }
+    
+    func addEvent()
+    {
+        let event = Event()
+        eContext.insert(event)
+        path = [event]
     }
 }
 
