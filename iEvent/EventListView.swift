@@ -22,9 +22,9 @@ struct EventListView: View {
                     VStack(alignment: .leading)
                     {
                         Text(event.eName)
-                            .font(.title2)
+                            .modifier(FontStyle(fontSize: 18, fontWeight: .medium))
                         Text(event.eDate.formatted(date: .long, time:.shortened))
-                            .font(.footnote)
+                            .modifier(FontStyle())
                     }
                     .padding(6)
                 }

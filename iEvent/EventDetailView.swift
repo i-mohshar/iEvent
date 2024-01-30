@@ -42,9 +42,11 @@ struct EventDetailView: View {
                 {
                     TextField("Add new to item to \(event.eName) event.",text: $newToDoItem)
                     Button("Add", action : addToDoItem)
+                        .buttonStyle(RedButtonStyle())
                 }
             }
         }
+        .modifier(FontStyle())
         .navigationTitle("Event Detail")
         .navigationBarTitleDisplayMode(.inline)
     }
