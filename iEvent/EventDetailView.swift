@@ -61,9 +61,12 @@ struct EventDetailView: View {
     
     func addToDoItem()
     {
-        let toDoItem = ToDoItem(name: newToDoItem)
-        event.eToDoItems.append(toDoItem)
-        newToDoItem = ""
+        if !newToDoItem.isEmpty
+        {
+            let toDoItem = ToDoItem(name: newToDoItem)
+            event.eToDoItems.append(toDoItem)
+            newToDoItem = ""
+        }
     }
 }
 
